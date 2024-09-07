@@ -7,55 +7,52 @@
  * 
  */
 function pesquisar() {
-    // Busca a seção HTML onde os resultados serão exibidos
+    // Obtém a seção HTML onde os resultados serão exibidos
     let section = document.getElementById("resultados-pesquisa");
-    let campoPesquisa = document.getElementById("campo-pesquisa").value;
+    let campoPesquisa = document.getElementById("campo-pesquisa").value
 
-    if (campoPesquisa === ''){
-      return;
+    // se campoPesquisa for uma string sem nada
+    if (!campoPesquisa) {
+      section.innerHTML = "<p>Nada foi encontrado. Você precisa digitar o nome de um atleta ou esporte</p>"
+      return 
     }
 
-    // Inicializa uma string para armazenar os resultados HTML
-    let resultados = '';
-    let titulo = '';
-    let descricao = '';
-    let info = '';
-    let tag = '';
+    campoPesquisa = campoPesquisa.toLowerCase()
+
+    // Inicializa uma string vazia para armazenar os resultados
+    let resultados = "";
+    let titulo = ""; 
+    let descricao = "";
+    let tags = "";
   
-
-    // Itera sobre cada item no array 'dados'
+    // Itera sobre cada dado da lista de dados
     for (let dado of dados) {
-      titulo = dado.titulo.toLowerCase();
-      descricao = dado.descricao.toLowerCase();
-      info = dado.info.toLowerCase();
-      tag = dado.tag.toLowerCase();
-
+        titulo = dado.titulo.toLowerCase()
+        descricao = dado.descricao.toLowerCase()
+        tags = dado.tags.toLowerCase()
 
       // Verifica se o título do item contém o texto de pesquisa
       if (dado.titulo.includes(campoPesquisa)
       || dado.descricao.includes(campoPesquisa)
       || dado.info.includes(campoPesquisa)
-      || dado.tag.includes(campoPesquisa)){
+      || dado.tags.includes(campoPesquisa)){
 
-      // Cria o HTML para cada item, formatando o título como um link
-    resultados += `
-    <div class="item-resultado">
-      <a href="https://titaniumfix.gcloudlabs.com/mge/login.jsp?expired=true" target="_blank">${dado.titulo}</a>
-      <p class="descricao-meta">${dado.descricao}</p>
-      <p class="descricao-meta">${dado.info}</p>
-     </div>
-  `;
-      }
+      // Cria o HTML para cada item(novo elemento) 
+      resultados += `
+        <div class="item-resultado">
+          <a href="https://titaniumfix.gcloudlabs.com/mge/login.jsp?expired=true" target="_blank">${dado.titulo}</a>
+          <p class="descricao-meta">${dado.descricao}</p>
+          <p class="descricao-meta">${dado.info}</p>
+        </div>
+      `;
     }
+  }
+  
+    // Verifica se há resultados
     if (!resultados) {
       resultados = '<p>Nenhum resultado encontrado.</p>';
     }
   
     // Adiciona os resultados à seção HTML
-    section.innerHTML += resultados;
+    section.innerHTML = resultados;
   }
-
-
-
-
-
